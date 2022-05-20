@@ -40,7 +40,7 @@ export default function NationLineChart() {
     }, []);
 
     useEffect(() => {
-        fetch('https://datausa.io/api/data?drilldowns=State&measures=Population')
+        fetch('https://datausa.io/api/data?drilldowns=State&measures=Population&year=latest')
         .then(response => response.json())
         .then(response => changeStateData({
             labels: response.data.map((d) => d['State']),
@@ -107,7 +107,7 @@ export default function NationLineChart() {
                         animate={{ opacity: 1}}
                         exit={{ opacity: 0 }}
                         initial={{ opacity: 0 }}
-                        style={{ height: '4500px' }}
+                        style={{ height: '1500px' }}
                         className='m-0 p-0'
                         >
                             <Bar datasetIdKey='US' data={StateData} options={options}/>
