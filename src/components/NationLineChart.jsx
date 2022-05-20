@@ -142,7 +142,9 @@ export default function NationLineChart() {
             </>
         )
     } else{
-        <h1>loading</h1>
+        <div className='flex w-full h-full'>
+            <h1 className='m-auto'>loading...</h1>
+        </div>
     }
     
 };
