@@ -45,12 +45,11 @@ export default function NationLineChart() {
         .then(response => changeStateData({
             labels: response.data.map((d) => d['State']),
             datasets: [{
-                label: 'Population By State',
+                label: 'Pop. by State',
                 data: response.data.map((d) => d['Population']),
 
                 backgroundColor: ["#F1F1F6"],
                 borderColor: "#b32134", 
-                hoverBorderColor: "rgba(255,99,132,1)",
             }],
             options: {
                 responsive: true,
@@ -58,15 +57,23 @@ export default function NationLineChart() {
                 scales: {
                     yAxes: [{
                        ticks: {
-                          beginAtZero: true
+                          beginAtZero: true,
+                          maxRotation: 90,
+                           minRotation: 90
                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false,
+                            maxRotation: 90,
+                            minRotation: 90
+                        }
                     }]
                  }
             },
         }));
     },[])
     const options = {
-        responsive: true,
         maintainAspectRatio: false,
         borderWidth: 1,
         indexAxis: 'y',
@@ -92,6 +99,9 @@ export default function NationLineChart() {
     if (USData) {
         return(
             <>
+                <nav className='flex p-3 bg-slate-500 text-white'>
+                    <h1>United States Population</h1>
+                </nav>
                 <div className='w-11/12 h-2/4 mx-auto'>
                     <Line datasetIdKey='US' data={USData}/>
                 </div>
@@ -101,19 +111,21 @@ export default function NationLineChart() {
                 onClick={() => {changeSeeStateData(!SeeStateData)}}>
                     See Data by State
                 </motion.button>
+                <div className='mx-auto w-full'>
                 {SeeStateData && StateData &&
                     <AnimatePresence>
                         <motion.div 
                         animate={{ opacity: 1}}
                         exit={{ opacity: 0 }}
                         initial={{ opacity: 0 }}
-                        style={{ height: '1500px' }}
+                        style={{ height: '1200px' }}
                         className='m-0 p-0'
                         >
-                            <Bar datasetIdKey='US' data={StateData} options={options}/>
+                            <Bar width={1} height={1} datasetIdKey='US' data={StateData} options={options}/>
                         </motion.div>
                     </AnimatePresence>
                 }
+                </div>
                 
             </>
         )
