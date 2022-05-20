@@ -50,7 +50,6 @@ export default function NationLineChart() {
 
                 backgroundColor: ["#F1F1F6"],
                 borderColor: "#b32134", 
-                hoverBackgroundColor: "rgba(59,59,109,0.5)",
                 hoverBorderColor: "rgba(255,99,132,1)",
             }],
             options: {
