@@ -1,6 +1,6 @@
 # US Population
 
-![Site demonstration](readme.gif)
+![Site demonstration](site.gif)
 
 ## About
 This project parses the <a href="https://datausa.io/about/api/">american population api</a> and converts the json into a chart. 
