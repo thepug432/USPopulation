@@ -4,6 +4,7 @@ import Chart from "chart.js/auto";
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function NationLineChart() {
+    const [RawData, changeRawData] = useState('')
     const [USData, changeUSData] = useState('')
     const [StateData, changeStateData] = useState('')
     const [SeeStateData, changeSeeStateData] = useState(false)
@@ -11,6 +12,7 @@ export default function NationLineChart() {
     useEffect(() =>{
         fetch('https://datausa.io/api/data?drilldowns=Nation&measures=Population')
         .then(response => response.json())
+        .then(response => {changeRawData(response); return response})
         .then(response => changeUSData({
             labels: response.data.reverse().map((d) => d['ID Year']),
             datasets: [{
@@ -38,7 +40,6 @@ export default function NationLineChart() {
             
         }));
     }, []);
-
     useEffect(() => {
         fetch('https://datausa.io/api/data?drilldowns=State&measures=Population&year=latest')
         .then(response => response.json())
@@ -95,7 +96,6 @@ export default function NationLineChart() {
       };
 
 
-
     if (USData) {
         return(
             <>
@@ -126,6 +126,18 @@ export default function NationLineChart() {
                     </AnimatePresence>
                 }
                 </div>
+                <footer className='flex flex-col p-3 bg-slate-500 mt-5 text-white'>
+                    <h1><strong className='text-3xl'>Sources</strong></h1>
+                    {RawData.source.map(data => {
+                            return(
+                                <>
+                                    <motion.a target="_blank" className='mr-auto pr-2' whileHover={{ scale: 1.1 }} href={data.annotations.dataset_link}>{data.annotations.source_name}</motion.a>
+                                    <h1>{data.annotations.source_description} This covers {data.annotations.topic} focusing on {data.annotations.subtopic}.</h1>
+                                </>
+                            )
+                        }
+                    )}
+                </footer>
                 
             </>
         )
