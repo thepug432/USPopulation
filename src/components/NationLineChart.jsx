@@ -97,17 +97,23 @@ export default function NationLineChart() {
                     <Line datasetIdKey='US' data={USData}/>
                 </div>
                 <motion.button 
-                className='p-3 mx-32 my-5 bg-slate-500 rounded text-white'
+                className='p-3 mx-32 bg-slate-500 rounded text-white'
                 whileHover={{ scale: 1.1 }}
                 onClick={() => {changeSeeStateData(!SeeStateData)}}>
                     See Data by State
                 </motion.button>
-                {SeeStateData &&
-                    StateData &&
-                        <div style={{ height: '4500px' }}>
+                {SeeStateData && StateData &&
+                    <AnimatePresence>
+                        <motion.div 
+                        animate={{ opacity: 1}}
+                        exit={{ opacity: 0 }}
+                        initial={{ opacity: 0 }}
+                        style={{ height: '4500px' }}
+                        className='m-0 p-0'
+                        >
                             <Bar datasetIdKey='US' data={StateData} options={options}/>
-                        </div>
-                    
+                        </motion.div>
+                    </AnimatePresence>
                 }
                 
             </>
